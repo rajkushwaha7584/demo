@@ -1,8 +1,9 @@
 .terraform/
 *.tfstate
 *.tfstate.*
-.terraform.lock.hcl
-crash.log
-crash.*.log
 *.tfvars
 *.tfvars.json
+mykey
+mykey.pub
+crash.log
+crash.*.log
