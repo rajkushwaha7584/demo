@@ -1,6 +1,8 @@
-.gitignore.swp
+.terraform/
+*.tfstate
+*.tfstate.*
 .terraform.lock.hcl
-.terraform
-terraform.tfstate
-terraform.tfstate.backup
-
+crash.log
+crash.*.log
+*.tfvars
+*.tfvars.json
