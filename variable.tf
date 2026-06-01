@@ -1,7 +1,7 @@
 variable "aws_region" {
   description = "AWS region"
   type        = string
-  default     = "ap-south-2"
+  default     = "ap-south-1"
 }
 
 variable "environment" {
@@ -31,7 +31,7 @@ variable "vpc_cidr" {
 variable "azs" {
   description = "Availability zones"
   type        = list(string)
-  default     = ["ap-south-2a", "ap-south-2b"]
+  default     = ["ap-south-1a", "ap-south-1b"]
 }
 
 variable "public_subnets" {
@@ -113,32 +113,32 @@ variable "minimum_password_length" {
   default     = 24
 }
 #==================================
-variable "db_name" {
-  description = "Aurora cluster name"
-  type        = string
-  default     = "three-tier-db"
-}
+# variable "db_name" {
+#   description = "Aurora cluster name"
+#   type        = string
+#   default     = "three-tier-db"
+# }
 
-variable "db_engine" {
-  description = "Aurora database engine"
-  type        = string
-  default     = "aurora-postgresql"
-}
+# variable "db_engine" {
+#   description = "Aurora database engine"
+#   type        = string
+#   default     = "aurora-postgresql"
+# }
 
-variable "db_engine_version" {
-  description = "Aurora PostgreSQL version"
-  type        = string
-  default     = "15.4"
-}
+# variable "db_engine_version" {
+#   description = "Aurora PostgreSQL version"
+#   type        = string
+#   default     = "15.4"
+# }
 
-variable "db_instance_class" {
-  description = "Aurora DB instance class"
-  type        = string
-  default     = "db.t3.medium"
-}
+# variable "db_instance_class" {
+#   description = "Aurora DB instance class"
+#   type        = string
+#   default     = "db.t3.medium"
+# }
 
-variable "db_allowed_cidr" {
-  description = "CIDR allowed to connect to RDS"
-  type        = string
-  default     = "10.0.0.0/16"
-}
+# variable "db_allowed_cidr" {
+#   description = "CIDR allowed to connect to RDS"
+#   type        = string
+#   default     = "10.0.0.0/16"
+# }

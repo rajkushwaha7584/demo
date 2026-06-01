@@ -48,22 +48,22 @@ output "account_alias" {
   value       = module.iam.account_alias
 }
 #========================
-output "rds_cluster_id" {
-  description = "RDS Aurora cluster ID"
-  value       = module.rds.rds_cluster_id
-}
+# output "rds_cluster_id" {
+#   description = "RDS Aurora cluster ID"
+#   value       = module.rds.rds_cluster_id
+# }
 
-output "rds_cluster_endpoint" {
-  description = "RDS Aurora writer endpoint"
-  value       = module.rds.rds_cluster_endpoint
-}
+# output "rds_cluster_endpoint" {
+#   description = "RDS Aurora writer endpoint"
+#   value       = module.rds.rds_cluster_endpoint
+# }
 
-output "rds_cluster_reader_endpoint" {
-  description = "RDS Aurora reader endpoint"
-  value       = module.rds.rds_cluster_reader_endpoint
-}
+# output "rds_cluster_reader_endpoint" {
+#   description = "RDS Aurora reader endpoint"
+#   value       = module.rds.rds_cluster_reader_endpoint
+# }
 
-output "rds_cluster_port" {
-  description = "RDS Aurora port"
-  value       = module.rds.rds_cluster_port
-}
+# output "rds_cluster_port" {
+#   description = "RDS Aurora port"
+#   value       = module.rds.rds_cluster_port
+# }

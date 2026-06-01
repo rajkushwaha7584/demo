@@ -1,5 +1,5 @@
 variable "instance_name" {
-  description = "EC2 instance name"
+  description = "EC2 instance"
   type        = string
 }
 
@@ -44,6 +44,6 @@ variable "environment" {
 }
 
 variable "project_name" {
-  description = "Project name"
+  description = "MYProject"
   type        = string
 }

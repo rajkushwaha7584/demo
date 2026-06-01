@@ -1,0 +1,25 @@
+Sir, database data MySQL container ke Docker volume me persist ho raha hai. 
+Container ke andar path /var/lib/mysql hai, aur EC2 host par actual path /var/lib/docker/volumes/.../_data hai.
+ Container restart/stop hone par data safe rahega, but volume delete karne par data delete ho jayega.
+
+
+ Terraform Code → AWS Provider → VPC → Subnets → Route Tables → IGW → Security Groups → EC2 → ECR → IAM  
+
+VPC: vpc-07eff6576f9298897
+Public Subnets: subnet-044dca2ce2ab10dcf, subnet-0a456654871da1f02
+Private Subnets: subnet-0a664ff89c99969c1, subnet-08f6764a33b8e89dc
+EC2: i-0ae594395c294706e
+ECR Repo: three-tier-app
+Elastic IP: 13.205.157.238
+
+flow
+
+Sir, first I provisioned the AWS infrastructure using Terraform. It created VPC, public/private subnets, route tables, internet gateway, security groups, EC2 instance, IAM account settings, and ECR repository.
+
+After that, because the EC2 public IP was not assigned automatically, I allocated and attached an Elastic IP to the instance. Then I connected to the Ubuntu EC2 using SSH.
+
+On the EC2 server, I installed Docker and deployed the Node MySQL application using the Docker Hub image philippaul/node-mysql-app:02. The app container is running on port 3000 and exposed to the internet through EC2 port 80.
+
+I also deployed a MySQL 8 container for the database. The Node app connects to the MySQL container internally through Docker network. The application is now accessible at http://13.205.157.238.
+
+The database data is stored in a Docker volume. Inside the MySQL container the path is /var/lib/mysql, and on the EC2 host the actual volume path is /var/lib/docker/volumes/.../_data. So container restart will not remove the data unless the Docker volume is deleted.
