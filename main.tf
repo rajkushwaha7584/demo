@@ -51,13 +51,37 @@ module "iam" {
   minimum_password_length = var.minimum_password_length
 }
 #=============================
+module "ecs" {
+  source = "./modules/ecs"
+
+  aws_region   = var.aws_region
+  environment  = var.environment
+  project_name = var.project_name
+
+  vpc_id         = module.vpc.vpc_id
+  public_subnets = module.vpc.public_subnets
+
+  container_name  = var.container_name
+  container_image = "${module.ecr.ecr_repository_url}:latest"
+  container_port  = var.container_port
+
+  app_allowed_cidr = var.app_allowed_cidr
+
+  task_cpu      = var.task_cpu
+  task_memory   = var.task_memory
+  desired_count = var.desired_count
+}
+#=============================
 # module "rds" {
 #   source = "./modules/rds"
 
 #   db_name           = var.db_name
+#   db_database_name  = var.db_database_name
 #   db_engine         = var.db_engine
 #   db_engine_version = var.db_engine_version
 #   db_instance_class = var.db_instance_class
+#   db_username       = var.db_username
+#   db_password       = var.db_password
 
 #   vpc_id          = module.vpc.vpc_id
 #   private_subnets = module.vpc.private_subnets

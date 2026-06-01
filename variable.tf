@@ -113,28 +113,83 @@ variable "minimum_password_length" {
   default     = 24
 }
 #==================================
+variable "container_name" {
+  description = "ECS container name"
+  type        = string
+  default     = "three-tier-app"
+}
+
+variable "container_port" {
+  description = "Application container port"
+  type        = number
+  default     = 3000
+}
+
+variable "app_allowed_cidr" {
+  description = "CIDR allowed to access ECS app"
+  type        = string
+  default     = "0.0.0.0/0"
+}
+
+variable "task_cpu" {
+  description = "Fargate task CPU"
+  type        = number
+  default     = 256
+}
+
+variable "task_memory" {
+  description = "Fargate task memory"
+  type        = number
+  default     = 512
+}
+
+variable "desired_count" {
+  description = "Number of ECS tasks"
+  type        = number
+  default     = 1
+}
+#==================================
 # variable "db_name" {
 #   description = "Aurora cluster name"
 #   type        = string
 #   default     = "three-tier-db"
 # }
 
+# variable "db_database_name" {
+#   description = "Initial database name"
+#   type        = string
+#   default     = "appdb"
+# }
+
 # variable "db_engine" {
 #   description = "Aurora database engine"
 #   type        = string
-#   default     = "aurora-postgresql"
+#   default     = "aurora-mysql"
 # }
 
 # variable "db_engine_version" {
-#   description = "Aurora PostgreSQL version"
+#   description = "Aurora MySQL version"
 #   type        = string
-#   default     = "15.4"
+#   default     = "8.0.mysql_aurora.3.05.2"
 # }
 
 # variable "db_instance_class" {
 #   description = "Aurora DB instance class"
 #   type        = string
 #   default     = "db.t3.medium"
+# }
+
+# variable "db_username" {
+#   description = "Database master username"
+#   type        = string
+#   default     = "admin"
+# }
+
+# variable "db_password" {
+#   description = "Database master password"
+#   type        = string
+#   sensitive   = true
+#   default     = "Admin12345678"
 # }
 
 # variable "db_allowed_cidr" {

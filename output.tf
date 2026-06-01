@@ -48,6 +48,26 @@ output "account_alias" {
   value       = module.iam.account_alias
 }
 #========================
+output "ecs_cluster_name" {
+  description = "ECS cluster name"
+  value       = module.ecs.ecs_cluster_name
+}
+
+output "ecs_service_name" {
+  description = "ECS service name"
+  value       = module.ecs.ecs_service_name
+}
+
+output "ecs_task_definition_arn" {
+  description = "ECS task definition ARN"
+  value       = module.ecs.ecs_task_definition_arn
+}
+
+output "ecs_security_group_id" {
+  description = "ECS security group ID"
+  value       = module.ecs.ecs_security_group_id
+}
+#========================
 # output "rds_cluster_id" {
 #   description = "RDS Aurora cluster ID"
 #   value       = module.rds.rds_cluster_id
