@@ -197,3 +197,69 @@ variable "desired_count" {
 #   type        = string
 #   default     = "10.0.0.0/16"
 # }
+#=============================================
+variable "alarm_name" {
+  description = "CloudWatch alarm name"
+  type        = string
+  default     = "three-tier-app-errors"
+}
+
+variable "alarm_description" {
+  description = "CloudWatch alarm description"
+  type        = string
+  default     = "Alarm when application error count is high"
+}
+
+variable "comparison_operator" {
+  description = "Comparison operator"
+  type        = string
+  default     = "GreaterThanOrEqualToThreshold"
+}
+
+variable "evaluation_periods" {
+  description = "Evaluation periods"
+  type        = number
+  default     = 1
+}
+
+variable "threshold" {
+  description = "Alarm threshold"
+  type        = number
+  default     = 10
+}
+
+variable "period" {
+  description = "Alarm period in seconds"
+  type        = number
+  default     = 60
+}
+
+variable "unit" {
+  description = "Metric unit"
+  type        = string
+  default     = "Count"
+}
+
+variable "namespace" {
+  description = "CloudWatch metric namespace"
+  type        = string
+  default     = "MyApplication"
+}
+
+variable "metric_name" {
+  description = "CloudWatch metric name"
+  type        = string
+  default     = "ErrorCount"
+}
+
+variable "statistic" {
+  description = "Metric statistic"
+  type        = string
+  default     = "Maximum"
+}
+
+variable "alarm_actions" {
+  description = "SNS topic ARNs for alarm notification"
+  type        = list(string)
+  default     = []
+}

@@ -90,3 +90,25 @@ module "ecs" {
 #   environment  = var.environment
 #   project_name = var.project_name
 # }
+#============================================================
+module "cloudwatch" {
+  source = "./modules/cloudwatch"
+
+  alarm_name        = var.alarm_name
+  alarm_description = var.alarm_description
+
+  comparison_operator = var.comparison_operator
+  evaluation_periods  = var.evaluation_periods
+  threshold           = var.threshold
+  period              = var.period
+  unit                = var.unit
+
+  namespace   = var.namespace
+  metric_name = var.metric_name
+  statistic   = var.statistic
+
+  alarm_actions = var.alarm_actions
+
+  environment  = var.environment
+  project_name = var.project_name
+}

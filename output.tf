@@ -87,3 +87,13 @@ output "ecs_security_group_id" {
 #   description = "RDS Aurora port"
 #   value       = module.rds.rds_cluster_port
 # }
+#=======================================================
+output "cloudwatch_alarm_id" {
+  description = "CloudWatch alarm ID"
+  value       = module.cloudwatch.cloudwatch_alarm_id
+}
+
+output "cloudwatch_alarm_arn" {
+  description = "CloudWatch alarm ARN"
+  value       = module.cloudwatch.cloudwatch_alarm_arn
+}
