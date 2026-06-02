@@ -1,0 +1,88 @@
+name: CD - Deploy to EC2
+
+on:
+  workflow_run:
+    workflows:
+      - CI - Push Image to ECR
+    types:
+      - completed
+
+env:
+  AWS_REGION: ap-south-1
+  AWS_ACCOUNT_ID: 294977572659
+  ECR_REPOSITORY: three-tier-app
+  IMAGE_TAG: latest
+
+jobs:
+  cd:
+    runs-on: ubuntu-latest
+
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
+    steps:
+      - name: Deploy on EC2
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            AWS_REGION=ap-south-1
+            AWS_ACCOUNT_ID=294977572659
+            ECR_REPOSITORY=three-tier-app
+            IMAGE_TAG=latest
+            IMAGE_URI=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPOSITORY:$IMAGE_TAG
+
+            echo "Installing required packages..."
+            sudo apt update -y
+            sudo apt install -y docker.io awscli
+
+            echo "Starting Docker..."
+            sudo systemctl enable docker
+            sudo systemctl start docker
+
+            echo "Login to ECR..."
+            aws ecr get-login-password --region $AWS_REGION | \
+            sudo docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
+
+            echo "Creating Docker network..."
+            sudo docker network create app-network || true
+
+            echo "Starting MySQL container..."
+            sudo docker stop mysql-db || true
+            sudo docker rm mysql-db || true
+
+            sudo docker run -d \
+              --name mysql-db \
+              --network app-network \
+              -e MYSQL_ROOT_PASSWORD=root123 \
+              -e MYSQL_DATABASE=sql_demo_01 \
+              -e MYSQL_USER=appuser \
+              -e MYSQL_PASSWORD=app123 \
+              -v mysql_data:/var/lib/mysql \
+              --restart unless-stopped \
+              mysql:8.0
+
+            echo "Waiting for MySQL..."
+            sleep 30
+
+            echo "Deploying Node app..."
+            sudo docker stop node-mysql-app || true
+            sudo docker rm node-mysql-app || true
+
+            sudo docker pull $IMAGE_URI
+
+            sudo docker run -d \
+              --name node-mysql-app \
+              --network app-network \
+              -p 80:3000 \
+              -e DB_HOST=mysql-db \
+              -e DB_PORT=3306 \
+              -e DB_USER=appuser \
+              -e DB_PASSWORD=app123 \
+              -e DB_NAME=sql_demo_01 \
+              --restart unless-stopped \
+              $IMAGE_URI
+
+            echo "Deployment completed."
+            sudo docker ps
